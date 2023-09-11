@@ -9,28 +9,32 @@ export default class User {
         this.#email = email;
     }
 
-    getUserId() {
+    get userId() {
         return this.#userId;
     }
 
-    setUserId(userId) {
+    set userId(userId) {
         this.#userId = userId;
     }
 
-    getName() {
+    get name() {
         return this.#name;
     }
 
-    setName(name) {
+    set name(name) {
         this.#name = name;
     }
 
-    getEmail() {
+    get email() {
         return this.#email;
     }
 
-    setEmail(email) {
+    set email(email) {
         this.#email = email;
+    }
+
+    toString() {
+        return JSON.stringify(`userId: ${this.#userId}, name: ${this.#name}, email: ${this.#email}`);
     }
 
 }

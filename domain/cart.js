@@ -1,11 +1,36 @@
+class CartItem {
+    #book;
+    #amount;
+
+    constructor(book, amount) {
+        this.#book = book;
+        this.#amount = amount;
+    }
+
+    get book() {
+        return this.#book;
+    }
+
+    set book(book) {
+        this.#book = book;
+    }
+
+    get amount() {
+        return this.#amount;
+    }
+
+    set amount(amount) {
+        this.#amount = amount;
+    }
+
+    toString() {
+        return JSON.stringify(`book: ${this.#book.toString()}, amount: ${this.#amount}`);
+    }
+
+}
+
 export default class Cart {
     #books = new Map();
-
-    constructor() {}
-
-    constructor(books) {
-        this.#books = books;
-    }
 
     getBooks() {
         return this.#books;
@@ -14,30 +39,41 @@ export default class Cart {
     addBook(book, amount) {
         let bookInCart = false;
         this.#books.forEach((value, key) => {
-            if (key === book.getIsbn()) {
+            if (key === book.isbn) {
                 bookInCart = true;
-                ++value.amount;
+                value.amount = value.amount + amount;
             }
         });
         if (!bookInCart) {
-            this.#books.set(book.getIsbn(), {...book, amount: amount});
+            this.#books.set(book.isbn, new CartItem(book, amount));
         }
     }
 
-    removeBook(book) {
+    removeBook(bookKey) {
         this.#books.forEach((value, key) => {
-            if (key === book.getIsbn()) {
-                this.#books.set(key, {...book, amount: --value.amount});
+            if (key === bookKey) {
+                let amount = this.#books.get(bookKey).amount;
+                this.#books.get(bookKey).amount = --amount;
             }
-            if (value.amount === 0) {
+            if (this.#books.get(bookKey).amount === 0) {
                 this.#books.delete(key);
             }
         });
     }
 
     calculateTotalPrice() {
-        return this.#books.values()
-        .reduce((sum, book) => {sum = book.price * book.amount + sum}, 0);
+        let sum = 0;
+        for (let item of this.#books.values()) {
+            sum += (item.amount * item.book.price);
+        }
+        return sum;
     }
 
+    toString() {
+        let str = "";
+        this.#books.forEach(value => {
+            str += value.toString();
+        })
+        return `books: ${str}`;
+    }
 }

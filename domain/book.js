@@ -13,44 +13,49 @@ export default class Book {
         this.#availability = availability;
     }
 
-    getTitle() {
+    get title() {
         return this.#title;
     }
 
-    setTitle(title) {
+    set title(title) {
         this.#title = title;
     }
 
-    getAuthor() {
+    get author() {
         return this.#author;
     }
 
-    setAuthor(author) {
+    set author(author) {
         this.#author = author;
     }
 
-    getIsbn() {
+    get isbn() {
         return this.#isbn;
     }
 
-    setIsbn(isbn) {
+    set isbn(isbn) {
         this.#isbn = isbn;
     }
 
-    getPrice() {
+    get price() {
         return this.#price;
     }
 
-    setPrice(price) {
+    set price(price) {
         this.#price = price;
     }
 
-    getAvailability() {
+    get availability() {
         return this.#availability;
     }
 
-    setAvailability(availability) {
+    set availability(availability) {
         this.#availability = availability;
+    }
+
+    toString() {
+        return JSON.stringify(`title: ${this.#title}, author: ${this.#author}, 
+        isbn: ${this.#isbn}, price: ${this.#price}, availability: ${this.#availability}`);
     }
 
 }
