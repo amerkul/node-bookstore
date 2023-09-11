@@ -1,3 +1,6 @@
+/**
+ * CartItem class includes data about book and amout of it.
+ */
 class CartItem {
     #book;
     #amount;
@@ -29,6 +32,10 @@ class CartItem {
 
 }
 
+/**
+ * Cart class stores the selected books and provide methods to add, remove, get books or 
+ * calculate the total price.
+ */
 export default class Cart {
     #books = new Map();
 

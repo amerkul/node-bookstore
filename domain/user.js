@@ -1,10 +1,13 @@
+import crypto from 'crypto';
+/**
+ * User class.
+ */
 export default class User {
-    #userId;
+    #userId = crypto.randomUUID();
     #name;
     #email;
     
-    constructor(userId, name, email) {
-        this.#userId = userId;
+    constructor(name, email) {
         this.#name = name;
         this.#email = email;
     }

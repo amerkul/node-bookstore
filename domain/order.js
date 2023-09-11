@@ -1,3 +1,6 @@
+/**
+ * Order class keeps data about user's purchases.
+ */
 export default class Order {
     #user;
     #cart;
