@@ -53,9 +53,37 @@ export default class Book {
         this.#availability = availability;
     }
 
+    getTypeOfBook() {
+        return 'The type is unknown';
+    }
+
     toString() {
-        return JSON.stringify(`title: ${this.#title}, author: ${this.#author}, 
-        isbn: ${this.#isbn}, price: ${this.#price}, availability: ${this.#availability}`);
+        return `title: ${this.#title}, author: ${this.#author}, 
+        isbn: ${this.#isbn}, price: ${this.#price}, availability: ${this.#availability}`;
+    }
+
+}
+
+export class FictionBook extends Book {
+    
+    constructor(title, author, isbn, price, availability) {
+        super(title, author, isbn, price, availability);
+    }
+
+    getTypeOfBook() {
+        return 'Fiction';
+    }
+
+}
+
+export class ThrillerBook extends Book {
+
+    constructor(title, author, isbn, price, availability) {
+        super(title, author, isbn, price, availability);
+    }
+
+    getTypeOfBook() {
+        return 'NonFiction';
     }
 
 }

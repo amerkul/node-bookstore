@@ -1,41 +1,58 @@
-import Book from "./domain/book.js";
 import User from "./domain/user.js";
 import Cart from "./domain/cart.js";
 import Order from "./domain/order.js";
+import Bookhouse from "./repository/bookhouse.js";
 
-const bookhouse = new Map();
-
-bookhouse.set('978-5-389-06010-4', new Book('Demons', 'Fyodor Dostoevsky', '978-5-389-06010-4', 10, 5));
-bookhouse.set('978-5-699-93151-4', new Book('The Collector', 'John Fowles', '978-5-699-93151-4', 15, 8));
-bookhouse.set('978-5-04-100038-7', new Book('Morphine', 'Mikhail Bulgakov', '978-5-04-100038-7', 8, 3));
-
+const bookhouse = new Bookhouse();
 const anna = new User(1, 'Anna Merkul', 'anna.merkul@bk.ru');
 const daniil = new User(2, 'Daniil Zhuravlyov', 'daniil1234@gmail.com');
 
 const annCart = new Cart();
+const daniilCart = new Cart();
 
 
-annCart.addBook(bookhouse.get('978-5-389-06010-4'), 3);
-annCart.addBook(bookhouse.get('978-5-04-100038-7'), 2);
-annCart.addBook(bookhouse.get('978-5-389-06010-4'), 1);
+annCart.addBook(bookhouse.getBookByIsbn('978-5-389-06010-4'), 3);
+annCart.addBook(bookhouse.getBookByIsbn('978-5-04-100038-7'), 2);
+annCart.addBook(bookhouse.getBookByIsbn('978-5-389-06010-4'), 1);
 
-let books = annCart.getBooks();
+daniilCart.addBook(bookhouse.getBookByIsbn('978-5-699-93151-4'), 4);
 
 annCart.removeBook('978-5-389-06010-4');
+daniilCart.removeBook('978-5-699-93151-4');
 
-const totalPrice = annCart.calculateTotalPrice();
+const annTotalPrice = annCart.calculateTotalPrice();
+const daniilTotalPrice = daniilCart.calculateTotalPrice();
 
-console.log(totalPrice);
-
-const annOrder = new Order(anna, annCart, totalPrice);
+const annOrder = new Order(anna, annCart, annTotalPrice);
+const daniilOrder = new Order(daniil, daniilCart, daniilTotalPrice);
 
 annOrder.cart.getBooks().forEach((value, key) => {
-    if (bookhouse.has(key)) {
-        bookhouse.get(key).availability -= value.amount;
+    if (bookhouse.getAll().has(key)) {
+        bookhouse.getAll().get(key).availability -= value.amount;
+    }
+});
+
+daniilOrder.cart.getBooks().forEach((value, key) => {
+    if(bookhouse.getAll().has(key)) {
+        bookhouse.getAll().get(key).availability -= value.amount;
     }
 });
 
 console.log(annOrder.toString());
+console.log(daniilOrder.toString());
+
+const booksByTitle = bookhouse.getByTitle('Demons');
+const booksByAuthor = bookhouse.getByAuthor('Mikhail Bulgakov');
+
+for (let book of booksByTitle) {
+    console.log(book.getTypeOfBook());
+    console.log(book.toString());
+}
+
+for (let book of booksByAuthor) {
+    console.log(book.getTypeOfBook());
+    console.log(book.toString());
+}
 
 
       

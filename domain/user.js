@@ -34,7 +34,7 @@ export default class User {
     }
 
     toString() {
-        return JSON.stringify(`userId: ${this.#userId}, name: ${this.#name}, email: ${this.#email}`);
+        return `userId: ${this.#userId}, name: ${this.#name}, email: ${this.#email}`;
     }
 
 }

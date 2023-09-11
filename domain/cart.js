@@ -24,7 +24,7 @@ class CartItem {
     }
 
     toString() {
-        return JSON.stringify(`book: ${this.#book.toString()}, amount: ${this.#amount}`);
+        return `book: ${this.#book.toString()}, amount: ${this.#amount}`;
     }
 
 }
